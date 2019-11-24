@@ -1,10 +1,14 @@
 import {createStore, bindActionCreators} from 'redux';
-
+import React from 'react';
+import ReactDom from 'react-dom';
+import Counter from "./components/counter";
 import reducer from "./reducer";
+import App from "./components/app"
 /*import {inc, dec, rnd} from "./actions";*/
 import * as actions from "./actions";
+import {Provider} from 'react-redux';
+
 const store = createStore(reducer);
-const {dispatch} = store;
 
 /*const bindActionCreator = (funcCreator, dispatch)=>{
     return (...args)=>{
@@ -12,7 +16,7 @@ const {dispatch} = store;
     }
 };*/
 
-const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
+/*const {inc, dec, rnd} = bindActionCreators(actions, dispatch);/*/
 /*const {incDispatch, decDispatch, rndDispatch } = bindActionCreators({
     incDispatch: inc,
     decDispatch: dec,
@@ -22,30 +26,22 @@ const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
 const decDispatch = ()=>{ dispatch(dec())};
 const rndDispatch = bindActionCreator(rnd, dispatch);*/
 
-document.getElementById("inc")
-    /*.addEventListener("click", incDispatch);*/
-    .addEventListener("click", inc);
 
-document.getElementById("dec")
-    .addEventListener("click", dec);
-
-document.getElementById("rnd")
-    .addEventListener("click", ()=>{
-        const payload = Math.floor(Math.random()*10);
-        rnd(payload);
-    });
-
+ReactDom.render(
+    <Provider store={store}>
+        <App/>
+    </Provider>,
+    document.getElementById("root"));
 const update= ()=>{
-    document.getElementById("counter").innerHTML = store.getState();
+    ReactDom.render(
+        <Provider store={store}>
+            <App/>
+        </Provider>,
+        document.getElementById("root"));
 };
 
+/*
+update();
 store.subscribe(update);
-/*store.subscribe(()=>{
-    console.log("store changed, state: ", store.getState());
-});
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});*/
+*/
 
-/*let state = reducer(undefined, {});
-state = reducer(state, {type: "INC"});
-console.log(state);*/
