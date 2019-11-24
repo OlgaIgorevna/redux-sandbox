@@ -6,11 +6,11 @@ import * as actions from "./actions";
 const store = createStore(reducer);
 const {dispatch} = store;
 
-const bindActionCreator = (funcCreator, dispatch)=>{
+/*const bindActionCreator = (funcCreator, dispatch)=>{
     return (...args)=>{
         dispatch(funcCreator(...args))
     }
-};
+};*/
 
 const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
 /*const {incDispatch, decDispatch, rndDispatch } = bindActionCreators({
